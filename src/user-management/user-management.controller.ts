@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -9,10 +10,11 @@ import {
 } from '@nestjs/common';
 import { Public } from 'src/common/decorators/public.decorator';
 import { Role } from 'src/common/decorators/role.decorator';
+import { Credentials } from 'src/models/dto/credentials.dto';
 import { PartialUser } from 'src/models/dto/partialTypes';
 import { UserWithPasswordDto } from 'src/models/dto/user-with-password.dto';
 import { UserDto } from 'src/models/dto/user.dto';
-import { Credentials, ROLES } from 'src/utils/constants';
+import { ROLES } from 'src/utils/constants';
 import { UserManagementService } from './user-management.service';
 
 @Controller('users')
@@ -37,7 +39,7 @@ export class UserManagementController {
 
   @Public()
   @Post()
-  createNewUser(@Body() credentials: Credentials): Promise<UserDto> {
+  createNewUser(@Body() credentials: UserWithPasswordDto): Promise<UserDto> {
     return this.userManagementService.createNewUser(credentials);
   }
 
@@ -54,5 +56,10 @@ export class UserManagementController {
     @Body() updatedUser: PartialUser,
   ): Promise<PartialUser> {
     return this.userManagementService.updateUserById(id, updatedUser);
+  }
+
+  @Delete()
+  clearUserDB(): Promise<void> {
+    return this.userManagementService.clearUserDB();
   }
 }

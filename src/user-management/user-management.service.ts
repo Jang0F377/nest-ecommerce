@@ -10,12 +10,7 @@ import { CRUDService } from 'src/common/services/crud.service';
 import { UserDto } from 'src/models/dto/user.dto';
 import { UserWithPassword } from 'src/models/user-with-password.model';
 import { User } from 'src/models/user.model';
-import {
-  Credentials,
-  ERROR_CODES,
-  ROLES,
-  UserProfile,
-} from 'src/utils/constants';
+import { ERROR_CODES, ROLES, UserProfile } from 'src/utils/constants';
 import { assert } from 'src/utils/error.utils';
 import { genSalt, hash } from 'bcryptjs';
 import { compare } from 'bcryptjs';
@@ -23,6 +18,7 @@ import { UserWithPasswordDto } from 'src/models/dto/user-with-password.dto';
 import { ConfigService } from '@nestjs/config';
 import { JWTService } from 'src/common/services/jwt.service';
 import { PartialUser } from 'src/models/dto/partialTypes';
+import { Credentials } from 'src/models/dto/credentials.dto';
 
 @Injectable()
 export class UserManagementService {
@@ -128,5 +124,16 @@ export class UserManagementService {
       throw new NotFoundException();
     }
     return findUser;
+  }
+
+  async clearUserDB(): Promise<void> {
+    const userDB = Promise.resolve(this.crudService.deleteMany(this.userModel));
+    const userWPasswordDB = Promise.resolve(
+      this.crudService.deleteMany(this.userWithPasswordModel),
+    );
+
+    await Promise.all([userDB, userWPasswordDB]).then(x => {
+      return x;
+    });
   }
 }

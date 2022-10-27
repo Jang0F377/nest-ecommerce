@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 import { ERROR_CODES, IS_PUBLIC_KEY, ROLES_KEY } from 'src/utils/constants';
@@ -22,11 +27,9 @@ export class AuthGuard implements CanActivate {
     const howManyRoles = requiredRoles.length;
     const req = context.switchToHttp().getRequest<Request>();
     const getTokenHeader = req.header('token');
-    assert(
-      getTokenHeader,
-      'NO TOKEN/HEADER DETECTED',
-      ERROR_CODES.UNAUTHORIZED,
-    );
+    if (!getTokenHeader) {
+      throw new UnauthorizedException('NO AUTH TOKEN DETECTED');
+    }
 
     const decodeToken = await this.jwtService.verifyToken(getTokenHeader);
     const { role } = decodeToken;

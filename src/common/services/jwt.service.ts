@@ -22,7 +22,7 @@ export class JWTService {
       token = await signTokenAsync(
         userProfile,
         this.configService.get('SECRET'),
-        { expiresIn: '2d' },
+        { expiresIn: 60 * 60 },
       );
     } catch (err) {
       console.log(err);
