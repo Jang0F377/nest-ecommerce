@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  nest-ecommerce-app:
+    container_name: nest-ecommerce-app
+    image: nest-ecommerce-app:latest
+    ports:
+      - 3000:3000
+    networks:
+      - nest-ecommerce-network
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+
+  nest-mongodb:
+    image: mongo:latest
+    container_name: nest-mongodb
+    volumes:
+      - nest-ecommerce-data1:/data/db
+    networks:
+      - nest-ecommerce-network
+    ports:
+      - 33333:27017
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+
+volumes:
+  nest-ecommerce-data1:
+networks:
+  nest-ecommerce-network:
