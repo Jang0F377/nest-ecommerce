@@ -1,4 +1,4 @@
-import { HttpStatus } from '@nestjs/common';
+import { HttpStatus, Logger } from '@nestjs/common';
 import { ERROR_CODES } from './constants';
 
 export class DomainError extends Error {
@@ -64,4 +64,15 @@ export function assert(predicate, message, code): void {
 
 export function throwError(message, code): void {
   throw new DomainError(message, code);
+}
+
+export function logException(exception): void {
+  let message = 'Unexpected Error';
+  if (exception?.message) {
+    message = exception.message;
+  }
+  if (exception?.stack) {
+    message = `${message}: Stack: ${exception.stack}`;
+  }
+  Logger.error(message);
 }

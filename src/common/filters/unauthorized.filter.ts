@@ -8,6 +8,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { logException } from 'src/utils/error.utils';
 
 @Catch(ForbiddenException, UnauthorizedException)
 export class UnauthorizedFilter<T extends HttpException>
@@ -27,6 +28,7 @@ export class UnauthorizedFilter<T extends HttpException>
     const headers = req.headers;
     const host = headers.host;
     const userAgent = headers['user-agent'];
+    logException(exceptionResponse);
     response.status(status).json({
       ...error,
       timestamp: new Date().toISOString(),
