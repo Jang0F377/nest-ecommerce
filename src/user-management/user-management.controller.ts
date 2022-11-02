@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Headers,
   HttpCode,
   Param,
   Patch,
@@ -23,7 +24,9 @@ export class UserManagementController {
 
   @Role(ROLES.ADMIN, ROLES.CUSTOMER)
   @Get('me')
-  returnCurrentUser() {}
+  returnCurrentUser(@Headers('token') token: string): Promise<UserDto> {
+    return this.userManagementService.returnCurrentUser(token);
+  }
 
   @Role(ROLES.ADMIN, ROLES.CUSTOMER)
   @Get()
@@ -31,7 +34,7 @@ export class UserManagementController {
     return this.userManagementService.returnAllUsers();
   }
 
-  @Role(ROLES.ADMIN)
+  @Role(ROLES.ADMIN, ROLES.CUSTOMER)
   @Get(':id')
   getUserById(@Param('id') id: string): Promise<any> {
     return this.userManagementService.getUserById(id);
@@ -50,6 +53,7 @@ export class UserManagementController {
     return this.userManagementService.login(credentials);
   }
 
+  @Role(ROLES.CUSTOMER, ROLES.ADMIN, ROLES.SUPER_ADMIN)
   @Patch(':id')
   updateUserById(
     @Param('id') id: string,
@@ -58,6 +62,7 @@ export class UserManagementController {
     return this.userManagementService.updateUserById(id, updatedUser);
   }
 
+  @Public()
   @Delete()
   clearUserDB(): Promise<void> {
     return this.userManagementService.clearUserDB();

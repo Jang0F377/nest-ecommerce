@@ -68,7 +68,6 @@ export class UserManagementService {
     const salt = await genSalt(12);
     const passHash = await hash(credentials.password, salt);
     useMe.password = passHash;
-    console.log('MAKING IT HERE');
     const privUser = await this.crudService.create(
       useMe,
       this.userWithPasswordModel,
@@ -135,5 +134,10 @@ export class UserManagementService {
     await Promise.all([userDB, userWPasswordDB]).then(x => {
       return x;
     });
+  }
+
+  async returnCurrentUser(token: string): Promise<UserDto> {
+    const user = await this.jwtService.verifyToken(token);
+    return user;
   }
 }

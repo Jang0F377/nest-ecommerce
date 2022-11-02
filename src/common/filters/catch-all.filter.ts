@@ -29,7 +29,6 @@ export class CatchAllFilter<T extends HttpException>
       typeof response === 'string'
         ? { message: exceptionResponse }
         : (exceptionResponse as object);
-    const ip = req.ip;
     const headers = req.headers;
     const host = headers.host;
     const userAgent = headers['user-agent'];
