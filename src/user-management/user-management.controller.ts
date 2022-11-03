@@ -28,6 +28,7 @@ export class UserManagementController {
     return this.userManagementService.returnCurrentUser(token);
   }
 
+  @Public()
   @Role(ROLES.ADMIN, ROLES.CUSTOMER)
   @Get()
   returnAllUsers(): Promise<UserDto[]> {
@@ -63,6 +64,7 @@ export class UserManagementController {
   }
 
   @Public()
+  @Role(ROLES.ADMIN, ROLES.SUPER_ADMIN)
   @Delete()
   clearUserDB(): Promise<void> {
     return this.userManagementService.clearUserDB();

@@ -5,7 +5,7 @@ import {
   Logger,
   NestInterceptor,
 } from '@nestjs/common';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { Observable, tap } from 'rxjs';
 import { logException } from 'src/utils/error.utils';
 
@@ -14,22 +14,27 @@ export class LoggingInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     let method: string;
     let url: string;
-    let request: null;
+    let request: any;
 
     method = context.switchToHttp().getRequest<Request>().method;
     url = context.switchToHttp().getRequest<Request>().url;
-    request = context.switchToHttp().getRequest<Request>()?.body;
+    if (method === 'GET' || 'DELETE') {
+      request = method;
+    } else {
+      request = context.switchToHttp().getRequest<Request>()?.body;
+    }
 
     const now = Date.now();
 
     return next.handle().pipe(
       tap(originalResponse => {
         try {
-          // let response = getObjectClone(originalResponse);
           Logger.log(
             `[METHOD: ${method}] [PATH: "${url}"] [DATE: ${new Date().toLocaleString()} ${
               Date.now() - now
-            }ms] [REQUEST: ${JSON.stringify(request)}] `,
+            }ms] [REQUEST: ${JSON.stringify(
+              request,
+            )}] [RESPONSE: ${JSON.stringify(originalResponse)}]`,
           );
         } catch (exception) {
           logException(exception);

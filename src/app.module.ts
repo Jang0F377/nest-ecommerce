@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CommonModule } from './common/common.module';
 import { UserManagementModule } from './user-management/user-management.module';
+import { ProductModule } from './product/product.module';
 
 // let uri: string =
 //   process.env.NODE_ENV === 'development'
@@ -17,6 +18,7 @@ import { UserManagementModule } from './user-management/user-management.module';
     MongooseModule.forRoot('mongodb://localhost:27017/nest-mongodb'),
     CommonModule,
     UserManagementModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

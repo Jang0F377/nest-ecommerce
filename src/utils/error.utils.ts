@@ -55,11 +55,15 @@ export class UnauthenticatedError extends DomainError {
  * @param predicate Predicate asserted to be true/truthy
  * @param message Error message sent if the assertion is false/falsy
  * @param code Error code sent if the assertion is false/falsy
+ * @param log? Boolean value to log or not
  * @returns void OR throws DomainError
  */
-export function assert(predicate, message, code): void {
+export function assert(predicate, message, code, log?): void {
   if (predicate) return;
-  throwError(message, code);
+  if (log) {
+    logException({ message: message });
+    throwError(message, code);
+  }
 }
 
 export function throwError(message, code): void {
