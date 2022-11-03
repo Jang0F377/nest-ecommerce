@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { CommonModule } from './common/common.module';
 import { UserManagementModule } from './user-management/user-management.module';
 import { ProductModule } from './product/product.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 // let uri: string =
 //   process.env.NODE_ENV === 'development'
@@ -15,6 +16,7 @@ import { ProductModule } from './product/product.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    EventEmitterModule.forRoot(),
     MongooseModule.forRoot('mongodb://localhost:27017/nest-mongodb'),
     CommonModule,
     UserManagementModule,
