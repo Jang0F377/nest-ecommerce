@@ -7,6 +7,7 @@ import { CommonModule } from './common/common.module';
 import { UserManagementModule } from './user-management/user-management.module';
 import { ProductModule } from './product/product.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
 
 // let uri: string =
 //   process.env.NODE_ENV === 'development'
@@ -21,6 +22,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     CommonModule,
     UserManagementModule,
     ProductModule,
+    ShoppingCartModule,
   ],
   controllers: [AppController],
   providers: [AppService],
