@@ -19,11 +19,10 @@ export class AddToCartListener {
   ) {}
   @OnEvent('add.to.cart')
   async handleAddToCart(event: AddToCartEvent) {
-    let updateUser;
     Logger.log('EVENT EMITTED');
     // Product check takes place before event,
     // So just need to make sure user exists
-    const { belongsTo } = event;
+    const { belongsTo, productId } = event;
     const findUser = await this.crudService.findOne(
       { _id: belongsTo },
       this.userModel,
@@ -31,31 +30,26 @@ export class AddToCartListener {
     if (!findUser) {
       throw new NotFoundException();
     }
-    const exists = findUser.shoppingCart.find(x => x.name === event.name);
-    if (exists) {
+    const itemExists = findUser.shoppingCart.find(x => x.name === event.name);
+    if (itemExists) {
       // ADD LOGIC TO INCREASE QUANTITY
-      console.log(exists);
-      updateUser = await this.crudService.updateOne(
-        { _id: event.belongsTo },
-        {
-          /* TODO */
-        },
+      console.log('EXISTS');
+      return await this.crudService.updateOne(
+        { _id: belongsTo, 'shoppingCart.name': event.name },
+        { $inc: { 'shoppingCart.$.quantity': 1 } },
         this.userModel,
       );
-
-      console.log(updateUser);
     }
     const item: ShoppingCartItemDto = {
-      productId: event.productId,
+      productId: productId,
       name: event.name,
       quantity: event.quantity,
       price: event.price,
     };
-    updateUser = await this.crudService.updateOne(
-      { _id: event.belongsTo },
+    return await this.crudService.updateOne(
+      { _id: belongsTo },
       { $push: { shoppingCart: item } },
       this.userModel,
     );
-    console.log(updateUser);
   }
 }
