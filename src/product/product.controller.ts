@@ -37,6 +37,7 @@ export class ProductController {
     return this.productService.postNewProduct(product);
   }
 
+  @Public()
   @Role(ROLES.ADMIN, ROLES.SUPER_ADMIN)
   @Patch(':id')
   updateProductById(

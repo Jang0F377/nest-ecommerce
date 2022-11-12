@@ -7,6 +7,7 @@ import {
 } from 'class-validator';
 import mongoose, { ObjectId } from 'mongoose';
 import { ROLES } from 'src/utils/constants';
+import { ShoppingCartItemDto } from './shopping-cart-item.dto';
 import { ShoppingCartDto } from './shopping-cart.dto';
 
 export class UserDto {
@@ -18,7 +19,7 @@ export class UserDto {
   @IsNotEmpty({ message: 'Email cannot be empty' })
   email: string;
 
-  shoppingCart?: ShoppingCartDto; //ADD TYPE
+  shoppingCart?: ShoppingCartItemDto[]; //ADD TYPE
 
   @IsOptional()
   @IsString({ message: 'First name must be a string' })

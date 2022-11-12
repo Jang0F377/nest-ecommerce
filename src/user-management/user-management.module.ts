@@ -23,6 +23,7 @@ import { JWTService } from 'src/common/services/jwt.service';
       },
     ]),
   ],
+  exports: [UserManagementService],
   providers: [UserManagementService, CRUDService, JWTService],
   controllers: [UserManagementController],
 })

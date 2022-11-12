@@ -37,7 +37,7 @@ export class UserManagementController {
 
   @Role(ROLES.ADMIN, ROLES.CUSTOMER)
   @Get(':id')
-  getUserById(@Param('id') id: string): Promise<any> {
+  getUserById(@Param('id') id: string): Promise<UserDto> {
     return this.userManagementService.getUserById(id);
   }
 

@@ -20,7 +20,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:build": "docker compose -f 'docker-compose.yml' up --build",
-    "docker:dev": "docker compose -f 'docker-compose.yml' up nest-mongodb -d && yarn start:dev"
+    "docker:dev": "docker compose -f 'docker-compose.yml' up nest-mongodb -d && yarn start:dev",
+    "docker:clear:all": "docker-compose down --rmi all --volumes"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

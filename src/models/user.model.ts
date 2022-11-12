@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document, ObjectId } from 'mongoose';
 import { ROLES } from 'src/utils/constants';
+import { ShoppingCartItem } from './shopping-cart-item.model';
 import { ShoppingCart } from './shopping-cart.model';
 
 @Schema()
@@ -11,11 +12,10 @@ export class User extends Document {
   email: string;
 
   @Prop({
-    required: true,
     type: Array,
     default: [],
   })
-  shoppingCart: ShoppingCart;
+  shoppingCart?: ShoppingCartItem[];
 
   @Prop({
     required: false,

@@ -9,9 +9,12 @@ import {
   ShoppingCartSchema,
 } from 'src/models/shopping-cart.model';
 import { Product, ProductSchema } from 'src/models/product.model';
+import { UserManagementService } from 'src/user-management/user-management.service';
+import { UserManagementModule } from 'src/user-management/user-management.module';
 
 @Module({
   imports: [
+    UserManagementModule,
     MongooseModule.forFeature([
       { name: ShoppingCart.name, schema: ShoppingCartSchema },
       { name: Product.name, schema: ProductSchema },
