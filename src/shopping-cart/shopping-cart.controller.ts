@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { PartialProduct } from 'src/models/dto/partialTypes';
 import { ShoppingCartItemDto } from 'src/models/dto/shopping-cart-item.dto';
+import { User } from 'src/models/user.model';
 import { ShoppingCartService } from './shopping-cart.service';
 
 @Controller('shoppingCart')
@@ -35,7 +36,7 @@ export class ShoppingCartController {
   }
 
   @Delete(':id')
-  clearUserCart(@Param('id') id: string) {
+  clearUserCart(@Param('id') id: string): Promise<User> {
     return this.shoppingCartService.clearUserCart(id);
   }
 }

@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { CRUDService } from 'src/common/services/crud.service';
 import { UserDto } from 'src/models/dto/user.dto';
 import { UserWithPassword } from 'src/models/user-with-password.model';
@@ -15,7 +15,6 @@ import { assert } from 'src/utils/error.utils';
 import { genSalt, hash } from 'bcryptjs';
 import { compare } from 'bcryptjs';
 import { UserWithPasswordDto } from 'src/models/dto/user-with-password.dto';
-import { ConfigService } from '@nestjs/config';
 import { JWTService } from 'src/common/services/jwt.service';
 import { PartialUser } from 'src/models/dto/partialTypes';
 import { Credentials } from 'src/models/dto/credentials.dto';

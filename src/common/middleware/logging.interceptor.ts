@@ -5,19 +5,17 @@ import {
   Logger,
   NestInterceptor,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { Observable, tap } from 'rxjs';
 import { logException } from 'src/utils/error.utils';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    let method: string;
-    let url: string;
     let request: any;
 
-    method = context.switchToHttp().getRequest<Request>().method;
-    url = context.switchToHttp().getRequest<Request>().url;
+    const method = context.switchToHttp().getRequest<Request>().method;
+    const url = context.switchToHttp().getRequest<Request>().url;
     if (method === 'GET' || 'DELETE') {
       request = method;
     } else {

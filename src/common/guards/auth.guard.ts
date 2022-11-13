@@ -6,8 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
-import { ERROR_CODES, IS_PUBLIC_KEY, ROLES_KEY } from 'src/utils/constants';
-import { assert } from 'src/utils/error.utils';
+import { IS_PUBLIC_KEY, ROLES_KEY } from 'src/utils/constants';
 import { JWTService } from '../services/jwt.service';
 
 @Injectable()

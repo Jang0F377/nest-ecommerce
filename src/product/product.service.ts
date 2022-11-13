@@ -7,7 +7,6 @@ import { PartialProduct } from 'src/models/dto/partialTypes';
 import { ProductDto } from 'src/models/dto/product.dto';
 import { Product } from 'src/models/product.model';
 import { ERROR_CODES } from 'src/utils/constants';
-import { logException } from 'src/utils/error.utils';
 
 @Injectable()
 export class ProductService {

@@ -3,6 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { ERROR_CODES, UserProfile } from 'src/utils/constants';
 import { assert } from 'src/utils/error.utils';
 import { promisify } from 'util';
+
+/* eslint-disable @typescript-eslint/no-var-requires */
 const jwt = require('jsonwebtoken');
 const signTokenAsync = promisify(jwt.sign);
 const verifyTokenAsync = promisify(jwt.verify);

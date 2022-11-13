@@ -1,5 +1,4 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { User } from '../user.model';
 import { ProductDto } from './product.dto';
 import { ShoppingCartItemDto } from './shopping-cart-item.dto';
 import { ShoppingCartDto } from './shopping-cart.dto';

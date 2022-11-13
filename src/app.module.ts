@@ -18,7 +18,7 @@ import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     EventEmitterModule.forRoot(),
-    MongooseModule.forRoot('mongodb://localhost:27017/nest-mongodb'),
+    MongooseModule.forRoot('mongodb://root:pass1234@nest-mongodb:27017'),
     CommonModule,
     UserManagementModule,
     ProductModule,

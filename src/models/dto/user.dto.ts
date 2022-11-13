@@ -5,10 +5,8 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import mongoose, { ObjectId } from 'mongoose';
 import { ROLES } from 'src/utils/constants';
 import { ShoppingCartItemDto } from './shopping-cart-item.dto';
-import { ShoppingCartDto } from './shopping-cart.dto';
 
 export class UserDto {
   _id?: any;

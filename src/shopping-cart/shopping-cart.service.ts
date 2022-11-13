@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   HttpException,
   HttpStatus,
   Injectable,
@@ -12,13 +11,8 @@ import { CRUDService } from 'src/common/services/crud.service';
 import { AddToCartEvent } from 'src/events';
 import { PartialProduct } from 'src/models/dto/partialTypes';
 import { ShoppingCartItemDto } from 'src/models/dto/shopping-cart-item.dto';
-import { ShoppingCartDto } from 'src/models/dto/shopping-cart.dto';
 import { Product } from 'src/models/product.model';
-import { ShoppingCartItem } from 'src/models/shopping-cart-item.model';
-import { ShoppingCart } from 'src/models/shopping-cart.model';
 import { User } from 'src/models/user.model';
-import { ERROR_CODES } from 'src/utils/constants';
-import { retry, Task } from 'src/utils/retry';
 
 @Injectable()
 export class ShoppingCartService {
@@ -45,7 +39,7 @@ export class ShoppingCartService {
     return shoppingCart.length;
   }
 
-  async clearUserCart(id: string) {
+  async clearUserCart(id: string): Promise<User> {
     const user = await this.crudService.findOne({ _id: id }, this.userModel);
     if (!user) {
       throw new NotFoundException();

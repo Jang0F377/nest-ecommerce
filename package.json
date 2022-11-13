@@ -10,7 +10,9 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "compodoc": "npx @compodoc/compodoc -p tsconfig.json -s -w",
+    "start:watch": "nest start --watch",
+    "start:dev": "concurrently \"yarn start:watch\" \"yarn compodoc\"",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -19,8 +21,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "docker:build": "docker compose -f 'docker-compose.yml' up --build",
-    "docker:build:d": "docker compose -f 'docker-compose.yml' up --build -d",
+    "docker:build": "docker compose -f 'docker-compose.yml' up --build -d",
     "docker:dev": "docker compose -f 'docker-compose.yml' up nest-mongodb -d && yarn start:dev",
     "docker:clear:all": "docker-compose down --rmi all --volumes"
   },
@@ -44,6 +45,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.19",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
