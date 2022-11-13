@@ -16,20 +16,48 @@ import { ShoppingCartDto } from 'src/models/dto/shopping-cart.dto';
 import { Product } from 'src/models/product.model';
 import { ShoppingCartItem } from 'src/models/shopping-cart-item.model';
 import { ShoppingCart } from 'src/models/shopping-cart.model';
+import { User } from 'src/models/user.model';
 import { ERROR_CODES } from 'src/utils/constants';
 import { retry, Task } from 'src/utils/retry';
 
 @Injectable()
 export class ShoppingCartService {
   constructor(
-    @InjectModel(ShoppingCart.name)
-    private shoppingCartModel: Model<ShoppingCart>,
     @InjectModel(Product.name) private productModel: Model<Product>,
+    @InjectModel(User.name) private userModel: Model<User>,
     private crudService: CRUDService,
     private eventEmitter: EventEmitter2,
   ) {}
 
-  async addItemToCart(id: string, productId: PartialProduct) {
+  async getShoppingCart(id: string): Promise<ShoppingCartItemDto[]> {
+    const { shoppingCart } = await this.crudService.findOne(
+      { _id: id },
+      this.userModel,
+    );
+    return shoppingCart;
+  }
+
+  async getShoppingCartCount(id: string): Promise<number> {
+    const { shoppingCart } = await this.crudService.findOne(
+      { _id: id },
+      this.userModel,
+    );
+    return shoppingCart.length;
+  }
+
+  async clearUserCart(id: string) {
+    const user = await this.crudService.findOne({ _id: id }, this.userModel);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    user.shoppingCart = [];
+    return await user.save();
+  }
+
+  async addItemToCart(
+    id: string,
+    productId: PartialProduct,
+  ): Promise<Record<string, any>> {
     const findProduct = await this.crudService.findOne(
       { _id: productId },
       this.productModel,

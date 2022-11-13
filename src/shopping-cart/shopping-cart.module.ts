@@ -9,15 +9,14 @@ import {
   ShoppingCartSchema,
 } from 'src/models/shopping-cart.model';
 import { Product, ProductSchema } from 'src/models/product.model';
-import { UserManagementService } from 'src/user-management/user-management.service';
-import { UserManagementModule } from 'src/user-management/user-management.module';
+import { User, UserSchema } from 'src/models/user.model';
 
 @Module({
   imports: [
-    UserManagementModule,
     MongooseModule.forFeature([
       { name: ShoppingCart.name, schema: ShoppingCartSchema },
       { name: Product.name, schema: ProductSchema },
+      { name: User.name, schema: UserSchema },
     ]),
   ],
   providers: [ShoppingCartService, CRUDService, ProductService],

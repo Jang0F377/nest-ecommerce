@@ -140,13 +140,4 @@ export class UserManagementService {
     const user = await this.jwtService.verifyToken(token);
     return user;
   }
-
-  async clearUserCart(id: string) {
-    const user = await this.crudService.findOne({ _id: id }, this.userModel);
-    if (!user) {
-      throw new NotFoundException();
-    }
-    user.shoppingCart = [];
-    return await user.save();
-  }
 }
